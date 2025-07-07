@@ -1,0 +1,22 @@
+{
+    "name": "whatsapp-service",
+    "version": "1.0.0",
+    "description": "WhatsApp messaging microservice for Mediano SaaS",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "keywords": [
+        "whatsapp",
+        "laravel",
+        "wwebjs"
+    ],
+    "author": "HoceineEl",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "qrcode": "^1.5.3",
+        "whatsapp-web.js": "^1.23.0"
+    }
+}

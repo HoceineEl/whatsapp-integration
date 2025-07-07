@@ -1,0 +1,92 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# WhatsApp Web.js Integration Guide
+
+This guide provides an overview of integrating with the `whatsapp-web.js` library, focusing on client initialization, message handling, and core functionalities.
+
+## Client Initialization
+
+To begin, initialize a new `Client` instance from `whatsapp-web.js` and call its `initialize()` method. This sets up the client and begins the authentication process.
+
+```javascript
+const { Client } = require('whatsapp-web.js');
+const client = new Client();
+client.initialize();
+```
+
+## Authentication
+
+Authentication primarily involves scanning a QR code or requesting a pairing code.
+
+### QR Code Authentication
+
+Listen for the `qr` event to receive the QR code string, which can then be displayed for scanning.
+
+```javascript
+client.on('qr', (qr) => {
+    console.log('QR RECEIVED', qr);
+});
+```
+
+### Pairing Code Authentication
+
+Alternatively, you can request a pairing code using the `requestPairingCode` method with a phone number.
+
+```javascript
+client.requestPairingCode('YOUR_PHONE_NUMBER_HERE');
+```
+
+## Message Handling
+
+### Receiving Messages
+
+Handle incoming messages by listening to the `message` event. The `msg` object contains details about the message.
+
+```javascript
+client.on('message', msg => {
+    if (msg.body === '!ping') {
+        msg.reply('pong');
+    }
+});
+```
+
+### Sending Messages
+
+Use the `sendMessage` method to send text or media messages to a chat. Various options are available for attachments, quoted messages, and other features.
+
+```javascript
+// Sending a text message
+chat.sendMessage('Hello, this is a test message!');
+
+// Sending a media message from a file path
+const { MessageMedia } = require('whatsapp-web.js');
+const media = MessageMedia.fromFilePath('./path/to/your/image.png');
+chat.sendMessage(media, { caption: 'Here is an image!' });
+```
+
+### Editing Messages
+
+Messages sent by the current user can be edited using the `edit` method on the `Message` object.
+
+```javascript
+// Assuming 'message' is an existing Message object
+message.edit('This message has been edited!', { mentions: ['recipient_id'] });
+```
+
+## Media Handling
+
+The library provides utilities for processing and sending various media types (images, videos, audio, documents). The `processMediaData` function and `MessageMedia.fromFilePath` are key for preparing media for sending.
+
+## Group Management
+
+`whatsapp-web.js` offers functionalities for managing groups, including creating new groups, approving or rejecting membership requests, and managing participants.
+
+*   **Creating Groups**: Use the `createGroup` method, providing a title and a list of participants.
+*   **Membership Requests**: Approve or reject pending membership requests using `approveGroupMembershipRequests`.
+
+## Internal Store Interaction
+
+The library exposes the `window.Store` object, which provides access to various internal WhatsApp Web modules for advanced interactions. This includes direct access to components like `Chat`, `SendMessage`, `GroupMetadata`, and `MediaUpload` for programmatic control.
