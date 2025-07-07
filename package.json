@@ -1,22 +1,35 @@
 {
     "name": "whatsapp-service",
     "version": "1.0.0",
-    "description": "WhatsApp messaging microservice for Mediano SaaS",
+    "description": "WhatsApp messaging microservice for multi-tenant SaaS applications",
     "main": "index.js",
     "scripts": {
-        "start": "node index.js"
+        "start": "node index.js",
+        "dev": "nodemon index.js",
+        "test": "node test-service.js",
+        "test:local": "SERVICE_URL=http://localhost:3000 node test-service.js"
     },
     "keywords": [
         "whatsapp",
         "laravel",
-        "wwebjs"
+        "wwebjs",
+        "microservice",
+        "saas",
+        "messaging"
     ],
     "author": "HoceineEl",
     "license": "ISC",
+    "engines": {
+        "node": ">=18.0.0"
+    },
     "dependencies": {
         "dotenv": "^16.3.1",
         "express": "^4.18.2",
         "qrcode": "^1.5.3",
         "whatsapp-web.js": "^1.23.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1",
+        "axios": "^1.6.0"
     }
 }
